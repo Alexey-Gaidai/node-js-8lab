@@ -5,7 +5,6 @@ const mongoose = require('mongoose');
 const methodOverride = require('method-override');
 
 const Post = require('./models/post');
-const Contact = require('./models/contact');
 
 const app = express();
 
@@ -36,17 +35,6 @@ app.use(methodOverride('_method'));
 app.get('/', (req, res) => {
     const title = 'Home';
     res.render(createPath('index'), { title });
-});
-
-app.get('/contacts', (req, res) => {
-    const title = 'Contacts';
-    Contact
-        .find()
-        .then(contacts => res.render(createPath('contacts'), { contacts, title }))
-        .catch((error) => {
-            console.log(error);
-            res.render(createPath('error'), { title: 'Error' });
-        });
 });
 
 app.get('/posts/:id', (req, res) => {
