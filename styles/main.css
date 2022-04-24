@@ -7,6 +7,25 @@ body {
     color: #fff;
 }
 
+.date_review {}
+
+.mark {
+    text-align: center;
+    font-size: 26px;
+    margin-bottom: 0px;
+}
+
+.review_wrapper {
+    display: flex;
+    text-align: center;
+    max-width: 50%;
+    margin: 0 auto;
+}
+
+.button-review {
+    margin: 0 auto;
+}
+
 h1 {
     text-transform: uppercase;
 }
@@ -123,9 +142,11 @@ textarea {
 .form-button input:hover {
     background-color: rgba(0, 0, 0, 0.6);
 }
-.fa-solid fa-star-sharp{
+
+.fa-solid fa-star-sharp {
     size: 15px;
 }
+
 .home,
 .error {
     display: flex;
@@ -171,6 +192,7 @@ textarea {
     font-size: 16px;
     box-sizing: border-box;
 }
+
 .btn-review {
     font-size: large;
     right: 10px;

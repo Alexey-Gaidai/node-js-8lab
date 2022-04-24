@@ -116,12 +116,12 @@ app.post('/posts/:id', (req, res) => {
     const { name, mark, reviewMessage } = req.body;
     const { id } = req.params;
     Post
-        .findByIdAndUpdate(id, {$push: { review: {name, mark, reviewMessage} }})
+        .findByIdAndUpdate(id, { $push: { review: { name, mark, reviewMessage } } })
         .then((result) => res.redirect(`/posts/${id}`))
         .catch((error) => {
             console.log(error);
-        res.render(createPath('error'), { title: 'Error' });
-    });
+            res.render(createPath('error'), { title: 'Error' });
+        });
 });
 
 app.use((req, res) => {
