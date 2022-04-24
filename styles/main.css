@@ -195,6 +195,16 @@ textarea {
     background-color: rgba(0, 0, 0, 0.6);
 }
 
+.dvach {
+    font-size: 45px;
+    align-content: center;
+    width: 50px;
+    height: 50px;
+    color: #ff6600;
+    text-align: center;
+    margin-top: 15px;
+}
+
 .btn-edit {
     right: 65px;
 }
