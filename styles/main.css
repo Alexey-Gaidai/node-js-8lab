@@ -202,6 +202,22 @@ textarea {
   box-sizing: border-box;
 }
 
+.btn-find {
+    position: absolute;
+    top: 10px;
+    text-transform: uppercase;
+    padding: 9px 15px;
+    cursor: pointer;
+    border: 1px solid #000;
+    background-color: rgba(0, 0, 0, 0.4);
+    color: #fff;
+    width: 48px;
+    border-radius: 6px;
+    font-size: 16px;
+    box-sizing: border-box;
+    margin-left: 5px;
+}
+
 .btn-review {
   font-size: large;
   right: 10px;
@@ -224,6 +240,16 @@ textarea {
 .btn-edit,
 .btn-delete:hover {
   background-color: rgba(0, 0, 0, 0.6);
+}
+
+.dvach {
+    font-size: 45px;
+    align-content: center;
+    width: 50px;
+    height: 50px;
+    color: #ff6600;
+    text-align: center;
+    margin-top: 15px;
 }
 
 .btn-edit {

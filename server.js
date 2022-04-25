@@ -83,7 +83,21 @@ app.put('/edit/:id', (req, res) => {
     });
 });
 
+// app.get('/posts', (req, res) => {
+//     const title = 'Posts';
+//     Post
+//         .find()
+//         .sort({ createdAt: -1 })
+//         .then(posts => res.render(createPath('posts'), { posts, title }))
+//         .catch((error) => {
+//             console.log(error);
+//             res.render(createPath('error'), { title: 'Error' });
+//         });
+// });
+
+
 app.get('/posts', (req, res) => {
+
   const title = 'Posts';
   Post
     .find()
@@ -94,6 +108,7 @@ app.get('/posts', (req, res) => {
       res.render(createPath('error'), { title: 'Error' });
     });
 });
+
 
 app.get('/add-post', (req, res) => {
   const title = 'Add Post';
