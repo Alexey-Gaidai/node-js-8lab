@@ -14,14 +14,14 @@ const PORT = 3000;
 const db = 'mongodb://127.0.0.1:27017/';
 
 mongoose
-    .connect(db, { useNewUrlParser: true, useUnifiedTopology: true })
-    .then((res) => console.log('Connected to DB'))
-    .catch((error) => console.log(error));
+  .connect(db, { useNewUrlParser: true, useUnifiedTopology: true })
+  .then((res) => console.log('Connected to DB'))
+  .catch((error) => console.log(error));
 
 const createPath = (page) => path.resolve(__dirname, 'ejs-views', `${page}.ejs`);
 
 app.listen(PORT, (error) => {
-    error ? console.log(error) : console.log(`listening port ${PORT}`);
+  error ? console.log(error) : console.log(`listening port ${PORT}`);
 });
 
 app.use(express.urlencoded({ extended: false }));
@@ -33,54 +33,54 @@ app.use(express.static('styles'));
 app.use(methodOverride('_method'));
 
 app.get('/', (req, res) => {
-    const title = 'Home';
-    res.render(createPath('index'), { title });
+  const title = 'Home';
+  res.render(createPath('index'), { title });
 });
 
 app.get('/posts/:id', (req, res) => {
-    const title = 'Post';
-    Post
-        .findById(req.params.id)
-        .then(post => res.render(createPath('post'), { post, title }))
-        .catch((error) => {
-            console.log(error);
-            res.render(createPath('error'), { title: 'Error' });
-        });
+  const title = 'Post';
+  Post
+    .findById(req.params.id)
+    .then(post => res.render(createPath('post'), { post, title }))
+    .catch((error) => {
+      console.log(error);
+      res.render(createPath('error'), { title: 'Error' });
+    });
 });
 
 app.delete('/posts/:id', (req, res) => {
-    Post
-        .findByIdAndDelete(req.params.id)
-        .then((result) => {
-            res.sendStatus(200);
-        })
-        .catch((error) => {
-            console.log(error);
-            res.render(createPath('error'), { title: 'Error' });
-        });
+  Post
+    .findByIdAndDelete(req.params.id)
+    .then((result) => {
+      res.sendStatus(200);
+    })
+    .catch((error) => {
+      console.log(error);
+      res.render(createPath('error'), { title: 'Error' });
+    });
 });
 
 app.get('/edit/:id', (req, res) => {
-    const title = 'Edit Post';
-    Post
-        .findById(req.params.id)
-        .then(post => res.render(createPath('edit-post'), { post, title }))
-        .catch((error) => {
-            console.log(error);
-            res.render(createPath('error'), { title: 'Error' });
-        });
+  const title = 'Edit Post';
+  Post
+    .findById(req.params.id)
+    .then(post => res.render(createPath('edit-post'), { post, title }))
+    .catch((error) => {
+      console.log(error);
+      res.render(createPath('error'), { title: 'Error' });
+    });
 });
 
 app.put('/edit/:id', (req, res) => {
-    const { title, author, text } = req.body;
-    const { id } = req.params;
-    Post
-        .findByIdAndUpdate(id, { title, author, text })
-        .then((result) => res.redirect(`/posts/${id}`))
-        .catch((error) => {
-            console.log(error);
-            res.render(createPath('error'), { title: 'Error' });
-        });
+  const { title, author, text } = req.body;
+  const { id } = req.params;
+  Post
+    .findByIdAndUpdate(id, { title, author, text })
+    .then((result) => res.redirect(`/posts/${id}`))
+    .catch((error) => {
+      console.log(error);
+      res.render(createPath('error'), { title: 'Error' });
+    });
 });
 
 // app.get('/posts', (req, res) => {
@@ -97,53 +97,51 @@ app.put('/edit/:id', (req, res) => {
 
 
 app.get('/posts', (req, res) => {
-    const title = 'Posts';
-    const { find }= req.body
-    console.log(find)
-    Post
-        .find({author: "11asas"})
-        .sort({ createdAt: -1 })
-        .then(posts => res.render(createPath('posts'), { posts, title }))
-        .catch((error) => {
-            console.log(error);
-            res.render(createPath('error'), { title: 'Error' });
-        });
+
+  const title = 'Posts';
+  Post
+    .find()
+    .sort({ createdAt: -1 })
+    .then(posts => res.render(createPath('posts'), { posts, title }))
+    .catch((error) => {
+      console.log(error);
+      res.render(createPath('error'), { title: 'Error' });
+    });
 });
 
 
 app.get('/add-post', (req, res) => {
-    const title = 'Add Post';
-    res.render(createPath('add-post'), { title });
+  const title = 'Add Post';
+  res.render(createPath('add-post'), { title });
 });
 
 app.post('/add-post', (req, res) => {
-    const { title, author, text, review } = req.body;
-    const post = new Post({ title, author, text, review });
-    post
-        .save()
-        .then((result) => res.redirect('/posts'))
-        .catch((error) => {
-            console.log(error);
-            res.render(createPath('error'), { title: 'Error' });
-        });
+  const { title, author, text, review } = req.body;
+  const post = new Post({ title, author, text, review });
+  post
+    .save()
+    .then((result) => res.redirect('/posts'))
+    .catch((error) => {
+      console.log(error);
+      res.render(createPath('error'), { title: 'Error' });
+    });
 });
 
 app.post('/posts/:id', (req, res) => {
-    const { name, mark, reviewMessage } = req.body;
-    const { id } = req.params;
-    console.log(req.body)
-    Post
-        .findByIdAndUpdate(id, {$push: { review: {name, mark, reviewMessage} }})
-        .then((result) => res.redirect(`/posts/${id}`))
-        .catch((error) => {
-            console.log(error);
-        res.render(createPath('error'), { title: 'Error' });
+  const { name, mark, reviewMessage } = req.body;
+  const { id } = req.params;
+  Post
+    .findByIdAndUpdate(id, { $push: { review: { name, mark, reviewMessage } } })
+    .then((result) => res.redirect(`/posts/${id}`))
+    .catch((error) => {
+      console.log(error);
+      res.render(createPath('error'), { title: 'Error' });
     });
 });
 
 app.use((req, res) => {
-    const title = 'Error Page';
-    res
-        .status(404)
-        .render(createPath('error'), { title });
+  const title = 'Error Page';
+  res
+    .status(404)
+    .render(createPath('error'), { title });
 });
