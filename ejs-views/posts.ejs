@@ -4,6 +4,16 @@
 <body>
   <%- include('./partials/nav.ejs') %>
   <h1>Статьи:</h1>
+
+  <form id="posts-search" method="posts" action="/posts">
+    <label>Поиск
+      <input type="text" name="find">
+    </label>
+    <button class="btn-find" type="submit">
+      <i class="fas fa-search"></i>
+    </button>
+  </form>
+
   <ul>
     <% if (posts.length) { %>
       <% posts.forEach(({ id, title, createdAt, text, author, review }) => { %>
@@ -37,6 +47,9 @@
         });
       }
     });
+  </script>
+  <script>
+    
   </script>
 </body>
 </html>

@@ -83,10 +83,25 @@ app.put('/edit/:id', (req, res) => {
         });
 });
 
+// app.get('/posts', (req, res) => {
+//     const title = 'Posts';
+//     Post
+//         .find()
+//         .sort({ createdAt: -1 })
+//         .then(posts => res.render(createPath('posts'), { posts, title }))
+//         .catch((error) => {
+//             console.log(error);
+//             res.render(createPath('error'), { title: 'Error' });
+//         });
+// });
+
+
 app.get('/posts', (req, res) => {
     const title = 'Posts';
+    const { find }= req.body
+    console.log(find)
     Post
-        .find()
+        .find({author: "11asas"})
         .sort({ createdAt: -1 })
         .then(posts => res.render(createPath('posts'), { posts, title }))
         .catch((error) => {
@@ -94,6 +109,7 @@ app.get('/posts', (req, res) => {
             res.render(createPath('error'), { title: 'Error' });
         });
 });
+
 
 app.get('/add-post', (req, res) => {
     const title = 'Add Post';
@@ -115,6 +131,7 @@ app.post('/add-post', (req, res) => {
 app.post('/posts/:id', (req, res) => {
     const { name, mark, reviewMessage } = req.body;
     const { id } = req.params;
+    console.log(req.body)
     Post
         .findByIdAndUpdate(id, {$push: { review: {name, mark, reviewMessage} }})
         .then((result) => res.redirect(`/posts/${id}`))
