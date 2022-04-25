@@ -5,11 +5,37 @@
   <body>
     <%- include('./partials/nav.ejs') %>
       <h1 class="list_stat">Список статей:</h1>
+      <div class="search_wrapper">
+        <div class="d1">
+          <form class="search_form" method="get">
+            <input type="text" name="find" placeholder="Искать здесь...">
+            <button type="submit" value="Add"><i class="fa fa-search " ></i></button action="/">
+        </form>
+      </div>
+        <section>
+          <div class="dropdown dropdown-dark">
+            <select  name="two" class="dropdown-select">
+              <option value="">Авторы</option>
+              <option value="1">Option #1</option>
+              <option value="2">Option #2</option>
+              <option value="3">Option #3</option>
+            </select>
+          </div>
+        </section>
+      </div>
+
+    </div>
+
       <ul>
         <% if (posts.length) { %>
           <% posts.forEach(({ id, title, createdAt, text, author, review }) => { %>
-            <li>
+            <li class="review-item__main">
               <article>
+                <div class="wrapper__trash">
+                <button class="btn-delete" data-id="<%= id %>">
+                  <i class="fas fa-trash-alt" data-id="<%= id %>"></i>
+                </button></div>
+
                 <h2>
                   <a href="/posts/<%= id %>">
                     <%= title %>
@@ -23,27 +49,27 @@
                   <h5 class="h5"></р5>
 
                 </div>
-                <button class="btn-delete" data-id="<%= id %>">
-              <i class="fas fa-trash-alt" data-id="<%= id %>"></i>
-            </button>
-              </article>
+
+            </article>
             </li>
             <% }) %>
               <% } %>
-      </ul>
+                </ul>
 
-      <script>
-        document.addEventListener('click', (e) => {
-          const id = e.target ?.dataset ?.id || null;
-          if (id) {
-            fetch(`/posts/${id}`, {
-              method: 'DELETE',
-            }).then(() => {
-              window.location.reload();
-            });
-          }
-        });
-      </script>
+                <script>
+                  document.addEventListener('click', (e) => {
+                    const id = e.target ?.dataset ?.id || null;
+                    if (id) {
+                      fetch(`/posts/${id}`, {
+                        method: 'DELETE',
+                      }).then(() => {
+                        window.location.reload();
+                      });
+                    }
+                  });
+                </script>
+                <script>
+                </script>
   </body>
 
 </html>

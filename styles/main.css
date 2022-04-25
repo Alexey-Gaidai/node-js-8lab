@@ -20,6 +20,23 @@ body {
   margin: 0 auto;
 }
 
+.dropdown {
+  /* /* align-items: center; */
+  margin-left: 1em;
+  font-weight: bold;
+  border-radius: 5%;
+  text-align: center;
+}
+
+select.dropdown-select {
+  font-size: 34px;
+  background-color: white;
+  font-family: "Montserrat", sans-serif;
+  text-transform: none;
+  border-radius: 5%;
+  text-align: center;
+}
+
 .button-review {
   margin: 0 auto;
 }
@@ -37,6 +54,17 @@ nav {
   display: flex;
   justify-content: flex-end;
   background-color: rgba(0, 0, 0, 0.7);
+}
+
+.d1 {
+  display: flex;
+}
+
+.d1 button {
+  width: 40px;
+  height: 40px;
+  margin: 30px 0 0 0;
+  margin: 0 auto;
 }
 
 nav ul {
@@ -64,29 +92,63 @@ a {
   color: #fff;
 }
 
-.list_stat{
+.review-item__main {
+  font-size: 18px;
+}
+
+.list_stat {
   text-align: center;
 }
 
 body {
   counter-reset: section;
 }
+
 h5::before {
   counter-increment: section;
-  content: "Статья номер " counter(section) ": " ;
+  content: "Статья номер " counter(section) ": ";
+}
+
+.otzivi {
+  text-align: center;
+}
+
+ul li {
+  font-size: large;
+}
+h2{
+  margin: 0%;
 }
 article {
   background-color: rgba(0, 0, 0, 0.4);
   padding: 10px 20px;
   border-radius: 3px;
   margin-bottom: 10px;
-  position: relative;
+  height: fit-content;
+  border-radius: 10px;
+
 }
 
 .info {
   display: flex;
   justify-content: space-between;
 }
+
+.search_wrapper {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.wrapper__list-group {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  width: 80%;
+  justify-content: center;
+  margin: 0 auto;
+}
+
 
 .post .info {
   justify-content: flex-start;
@@ -97,10 +159,17 @@ h2 a {
   color: aqua;
 }
 
+.search_form {
+  display: inline-block;
+  margin: 0 auto;
+}
+input{
+  border-radius: 8px;
+}
 form {
   background-color: rgba(0, 0, 0, 0.4);
   padding: 10px 20px;
-  border-radius: 3px;
+  border-radius: 8px;
   display: flex;
   flex-direction: column;
 }
@@ -185,10 +254,11 @@ textarea {
   font-size: 160px;
   margin-bottom: 20px;
 }
-
+.wrapper__trash{
+  text-align: end;
+}
 .btn-edit,
 .btn-delete {
-  position: absolute;
   top: 10px;
   text-transform: uppercase;
   padding: 10px 15px;
@@ -199,7 +269,7 @@ textarea {
   width: 48px;
   border-radius: 3px;
   font-size: 16px;
-  box-sizing: border-box;
+
 }
 
 .btn-review {

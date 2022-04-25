@@ -16,21 +16,26 @@
           <%= post.title %>
         </p>
 
+
+        <div class="wrapper__trash">
+        <button class="btn-delete" data-id="<%= post.id %>">
+          <i class="fas fa-trash-alt" data-id="<%= post.id %>"></i>
+        </button>
         <a href="/edit/<%= post.id %>" class="btn-edit">
           <i class="fas fa-edit"></i>
         </a>
-        <button class="btn-delete" data-id="<%= post.id %>">
-                    <i class="fas fa-trash-alt" data-id="<%= post.id %>"></i>
-                </button>
-      </article>
+      </div>
 
-      <ul>
+      </article>
+      <h2 class="otzivi">Отзывы
+      </h2>
+      <ul class="wrapper__list-group">
         <% post.review.forEach(({ name, reviewMessage, mark}) => { %>
-          <li>
+          <li class="list-group-item">
             <article>
               <div class="info">
                 <span><%= name %></span>
-                
+
                 <span class="date_review"><%= post.createdAt.toLocaleDateString() || 'No date' %></span>
 
               </div>
@@ -83,12 +88,11 @@
       </script>
       <script>
         let el = body.getElementsByTagName("p")
-        for (let e of el){
-          if ( e.textContent == '' * 32 ) {
+        for (let e of el) {
+          if (e.textContent == '' * 32) {
             e.innerHTML = "Нет оценки";
           }
         }
-
       </script>
   </body>1
 

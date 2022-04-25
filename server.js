@@ -51,7 +51,7 @@ app.get('/posts/:id', (req, res) => {
 app.delete('/posts/:id', (req, res) => {
   Post
     .findByIdAndDelete(req.params.id)
-    .then((result) => {
+    .then(() => {
       res.sendStatus(200);
     })
     .catch((error) => {
@@ -83,6 +83,18 @@ app.put('/edit/:id', (req, res) => {
     });
 });
 
+app.post('/posts', (req, res) => {
+  const { find } = req.params;
+  console.log(find);
+  Post
+    .find()
+    .then(posts => res.render(createPath('posts'), { find }))
+    .catch((error) => {
+      console.log(error);
+      res.render(createPath('error'), { title: 'Error' });
+    });
+});
+
 app.get('/posts', (req, res) => {
   const title = 'Posts';
   Post
@@ -94,6 +106,8 @@ app.get('/posts', (req, res) => {
       res.render(createPath('error'), { title: 'Error' });
     });
 });
+
+
 
 app.get('/add-post', (req, res) => {
   const title = 'Add Post';
