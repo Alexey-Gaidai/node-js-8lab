@@ -38,7 +38,7 @@ app.get('/', (req, res) => {
 });
 
 app.get('/posts/:id', (req, res) => {
-  const title = 'Post';
+  const title = 'Пост';
   Post
     .findById(req.params.id)
     .then(post => res.render(createPath('post'), { post, title }))
@@ -61,7 +61,7 @@ app.delete('/posts/:id', (req, res) => {
 });
 
 app.get('/edit/:id', (req, res) => {
-  const title = 'Edit Post';
+  const title = 'Редактировать';
   Post
     .findById(req.params.id)
     .then(post => res.render(createPath('edit-post'), { post, title }))
@@ -97,7 +97,7 @@ app.put('/edit/:id', (req, res) => {
 
 
 app.get('/posts', (req, res) => {
-  const title = 'Posts';
+  const title = 'Статьи';
   const search_tag = req.query.find
   const tag_author = req.query.author
   console.log(tag_author)
@@ -139,7 +139,7 @@ app.get('/posts', (req, res) => {
 
 
 app.get('/add-post', (req, res) => {
-  const title = 'Add Post';
+  const title = 'Добавить статью';
   res.render(createPath('add-post'), { title });
 });
 
