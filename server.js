@@ -97,9 +97,15 @@ app.put('/edit/:id', (req, res) => {
 
 
 app.get('/posts', (req, res) => {
-
   const title = 'Posts';
-  Post
+  const search_tag = req.query.find
+  if (search_tag != null) {
+    search_tag.toString().toLowerCase()
+    console.log(search_tag)
+  }
+  
+  if (search_tag == null){
+    Post
     .find()
     .sort({ createdAt: -1 })
     .then(posts => res.render(createPath('posts'), { posts, title }))
@@ -107,6 +113,17 @@ app.get('/posts', (req, res) => {
       console.log(error);
       res.render(createPath('error'), { title: 'Error' });
     });
+  }
+  else {
+    Post
+      .find({ title : {$regex: search_tag, $options:"i" } } )
+      .sort({ createdAt: -1 })
+      .then(posts => res.render(createPath('posts'), { posts, title }))
+      .catch((error) => {
+        console.log(error);
+        res.render(createPath('error'), { title: 'Error' });
+      });
+  }
 });
 
 

@@ -2,6 +2,15 @@
 <html lang="en">
 <%- include('./partials/head.ejs') %>
 
+<form id="posts-search" method="get" action="/posts">
+  <label>Поиск
+    <input type="text" name="find" id="search_id" >
+  </label>
+  <button class="btn-search" >
+    <i class="fas fa-search"></i>
+  </button>
+</form>
+
   <body>
     <%- include('./partials/nav.ejs') %>
       <h1 class="list_stat">Список статей:</h1>
