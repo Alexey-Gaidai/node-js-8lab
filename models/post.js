@@ -17,7 +17,11 @@ const postSchema = new Schema({
     review: [{
         name: String,
         reviewMessage: String,
-        mark: String
+        mark: {
+            type: Number,
+            max: 10,
+            min: 0,
+        }
     }]
 }, { timestamps: true });
 

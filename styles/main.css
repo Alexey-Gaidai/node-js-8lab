@@ -186,6 +186,11 @@ textarea {
   margin-bottom: 20px;
 }
 
+.btn-search {
+  font-size: 14px;
+  padding: 10px 15px;
+}
+
 .btn-edit,
 .btn-delete {
   position: absolute;

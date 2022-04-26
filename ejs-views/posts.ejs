@@ -2,14 +2,28 @@
 <html lang="en">
 <%- include('./partials/head.ejs') %>
 
-<form id="posts-search" method="get" action="/posts">
+<div style="display: flex">
+<form id="posts-search" method="get" action="/posts" >
   <label>Поиск
     <input type="text" name="find" id="search_id" >
   </label>
-  <button class="btn-search" >
+  <button class="btn-search">
     <i class="fas fa-search"></i>
   </button>
 </form>
+<form id="posts-author" method="get" action="/posts">
+  <label>Поиск по автору:</label>
+      <select name="author">
+        <option value="">Выбрать автора</option>
+        <% posts.forEach(({ id, title, createdAt, text, author, review }) => { %>
+          <option value=<%= author %>><%= author %></option>
+        <% }) %>
+      </select>
+        <button class="button_author_search">
+          <i class="fa fa-search"></i>
+      </button action="/posts">
+</form>
+</div>
 
   <body>
     <%- include('./partials/nav.ejs') %>

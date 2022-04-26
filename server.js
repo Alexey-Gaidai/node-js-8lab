@@ -99,12 +99,13 @@ app.put('/edit/:id', (req, res) => {
 app.get('/posts', (req, res) => {
   const title = 'Posts';
   const search_tag = req.query.find
+  const tag_author = req.query.author
+  console.log(tag_author)
   if (search_tag != null) {
     search_tag.toString().toLowerCase()
     console.log(search_tag)
   }
-  
-  if (search_tag == null){
+  if (search_tag == null && tag_author == null){
     Post
     .find()
     .sort({ createdAt: -1 })
@@ -114,9 +115,19 @@ app.get('/posts', (req, res) => {
       res.render(createPath('error'), { title: 'Error' });
     });
   }
-  else {
+  else if (tag_author == null) {
     Post
-      .find({ title : {$regex: search_tag, $options:"i" } } )
+      .find({ title : {$regex: search_tag, $options:"i" }})
+      .sort({ createdAt: -1 })
+      .then(posts => res.render(createPath('posts'), { posts, title }))
+      .catch((error) => {
+        console.log(error);
+        res.render(createPath('error'), { title: 'Error' });
+      });
+  }
+  else if (search_tag == null) {
+    Post
+      .find({ author : {$regex: tag_author, $options:"i" }})
       .sort({ createdAt: -1 })
       .then(posts => res.render(createPath('posts'), { posts, title }))
       .catch((error) => {
