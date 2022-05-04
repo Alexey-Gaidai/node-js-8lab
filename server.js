@@ -60,6 +60,18 @@ app.delete('/posts/:id', (req, res) => {
     });
 });
 
+app.get('/top-posts', (req, res) => {
+  const title = 'Топ статей';
+  Post
+    .aggregate([{
+    }])
+    .then(posts => res.render(createPath('top-posts'), { posts, title }))
+    .catch((error) => {
+      console.log(error);
+      res.render(createPath('error'), { title: 'Error' });
+    });
+});
+
 app.get('/edit/:id', (req, res) => {
   const title = 'Редактировать';
   Post
@@ -100,12 +112,10 @@ app.get('/posts', (req, res) => {
   const title = 'Статьи';
   const search_tag = req.query.find
   const tag_author = req.query.author
-  console.log(tag_author)
-  if (search_tag != null) {
-    search_tag.toString().toLowerCase()
-    console.log(search_tag)
-  }
-  if (search_tag == null && tag_author == null){
+  const startdate = req.query.start
+  const enddate = req.query.end
+
+  if (search_tag == null && tag_author == null && startdate == null && enddate == null) {
     Post
     .find()
     .sort({ createdAt: -1 })
@@ -115,9 +125,9 @@ app.get('/posts', (req, res) => {
       res.render(createPath('error'), { title: 'Error' });
     });
   }
-  else if (tag_author == null) {
+  else if (tag_author == null && startdate == null && enddate == null) {
     Post
-      .find({ title : {$regex: search_tag, $options:"i" }})
+      .find({ $or: [{title : {$regex: search_tag, $options:"i" }},{ tag : {$regex: search_tag, $options:"i" }}]})
       .sort({ createdAt: -1 })
       .then(posts => res.render(createPath('posts'), { posts, title }))
       .catch((error) => {
@@ -125,7 +135,7 @@ app.get('/posts', (req, res) => {
         res.render(createPath('error'), { title: 'Error' });
       });
   }
-  else if (search_tag == null) {
+  else if (search_tag == null && startdate == null && enddate == null) {
     Post
       .find({ author : {$regex: tag_author, $options:"i" }})
       .sort({ createdAt: -1 })
@@ -134,6 +144,16 @@ app.get('/posts', (req, res) => {
         console.log(error);
         res.render(createPath('error'), { title: 'Error' });
       });
+  }
+  else if (tag_author == null && search_tag == null) {
+    console.log(startdate)
+    Post
+    .find({ createdAt: { $gte: new Date(startdate), $lte: new Date(enddate)}})
+    .then(posts => res.render(createPath('posts'), { posts, title }))
+    .catch((error) => {
+      console.log(error);
+      res.render(createPath('error'), { title: 'Error' });
+    });
   }
 });
 
@@ -144,8 +164,9 @@ app.get('/add-post', (req, res) => {
 });
 
 app.post('/add-post', (req, res) => {
-  const { title, author, text, review } = req.body;
-  const post = new Post({ title, author, text, review });
+  const { title, author, text, review, tag } = req.body;
+  const post = new Post({ title, author, text, review, tag });
+  console.log(tag)
   post
     .save()
     .then((result) => res.redirect('/posts'))

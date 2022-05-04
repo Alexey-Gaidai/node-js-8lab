@@ -22,7 +22,11 @@ const postSchema = new Schema({
             max: 10,
             min: 0,
         }
-    }]
+    }],
+    tag: {
+        type: String, 
+        required: true
+    }
 }, { timestamps: true });
 
 // [{

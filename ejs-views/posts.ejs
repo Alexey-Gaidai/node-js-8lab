@@ -2,35 +2,50 @@
 <html lang="en">
 <%- include('./partials/head.ejs') %>
 
-<div style="display: flex">
-<form id="posts-search" method="get" action="/posts" >
-  <label>Поиск
-    <input type="text" name="find" id="search_id" >
-  </label>
-  <button class="btn-search">
-    <i class="fas fa-search"></i>
-  </button>
-</form>
-<form id="posts-author" method="get" action="/posts">
-  <label>Поиск по автору:</label>
-      <select name="author">
-        <option value="">Выбрать автора</option>
-        <% posts.forEach(({ id, title, createdAt, text, author, review }) => { %>
-          <option value=<%= author %>><%= author %></option>
-        <% }) %>
-      </select>
-        <button class="button_author_search">
-          <i class="fa fa-search"></i>
-      </button action="/posts">
-</form>
-</div>
-
   <body>
+    <div style="display: flex;justify-content: center;flex-direction: row;">
+      <form id="posts-search" method="get" action="/posts" >
+        <div style="display: flex">
+        <label>Поиск:
+          <input type="text" name="find" id="search_id" >
+        </label>
+        <button class="btn-search">
+          <i class="fas fa-search"></i>
+        </button>
+      </div>
+      </form>
+      <form id="posts-author" method="get" action="/posts">
+        <div style="display: inline-grid">
+        <label>Поиск по автору:</label>
+            <select name="author">
+              <option value="">Выбрать автора</option>
+              <% posts.forEach(({ id, title, createdAt, text, author, review }) => { %>
+                <option value=<%= author %>><%= author %></option>
+              <% }) %>
+            </select>
+            <button class="button_author_search">
+                <i class="fa fa-search"></i>
+            </button action="/posts">
+          </div>
+      </form>
+      <form action="/posts" method="get" id="posts-date">
+        <div class="search_date__block">
+          <label for="start">Start date:</label>
+          <input type="date" id="start" name="start" value="2022-05-05" >
+          <label for="start">End date:</label>
+          <input type="date" id="end" name="end" value="2022-05-06" >
+          <button class="button_author_search">
+            <i class="fa fa-search">
+            </i>
+        </button action="/posts" >
+        </div>
+      </form>
+    </div>
     <%- include('./partials/nav.ejs') %>
       <h1 class="list_stat">Список статей:</h1>
       <ul>
         <% if (posts.length) { %>
-          <% posts.forEach(({ id, title, createdAt, text, author, review }) => { %>
+          <% posts.forEach(({ id, title, createdAt, text, author, review, tag }) => { %>
             <li>
               <article>
                 <h2>
@@ -42,10 +57,34 @@
                   <%= text %>
                 </p>
                 <div class="info">
-                  <span><%= author %></span>
-                  <h5 class="h5"></р5>
-
+                  <span><span style="color: gray;">Автор: </span><%= author %></span>
                 </div>
+                <div class="info">
+                <p>
+                  <span style="color: gray;">Рейтинг: </span>
+                  <% 
+                  getAvgMark = function(review){
+                    if (review.length == 0){
+                      return 0;
+                    }
+                    else{
+                      sum = 0;
+                      for (var i = 0; i < review.length; i++){
+                        sum += review[i].mark;
+                      }
+                      return sum/review.length;
+                    }
+                  }
+                  %>
+                  <%= getAvgMark(review).toFixed(1) %>
+                </p>
+                <p>
+                  <%= createdAt.toLocaleDateString() %>
+                </p>
+              </div>
+              <div class="info">
+                <span><span style="color: gray;">Теги: </span><%= tag %></span>
+              </div>
                 <button class="btn-delete" data-id="<%= id %>">
               <i class="fas fa-trash-alt" data-id="<%= id %>"></i>
             </button>
