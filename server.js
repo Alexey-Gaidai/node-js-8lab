@@ -11,7 +11,7 @@ const app = express();
 app.set('view engine', 'ejs');
 
 const PORT = 3000;
-const db = 'mongodb://127.0.0.1:27017/';
+const db = 'mongodb+srv://thealexis95:Suckmydick1204@cluster0.d7rmw.mongodb.net/nodelab';
 
 mongoose
   .connect(db, { useNewUrlParser: true, useUnifiedTopology: true })
@@ -54,18 +54,6 @@ app.delete('/posts/:id', (req, res) => {
     .then((result) => {
       res.sendStatus(200);
     })
-    .catch((error) => {
-      console.log(error);
-      res.render(createPath('error'), { title: 'Error' });
-    });
-});
-
-app.get('/top-posts', (req, res) => {
-  const title = 'Топ статей';
-  Post
-    .aggregate([{
-    }])
-    .then(posts => res.render(createPath('top-posts'), { posts, title }))
     .catch((error) => {
       console.log(error);
       res.render(createPath('error'), { title: 'Error' });
