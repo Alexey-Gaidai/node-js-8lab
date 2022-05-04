@@ -10,7 +10,7 @@ const app = express();
 
 app.set('view engine', 'ejs');
 
-const PORT = 3000;
+const PORT = process.env.PORT || 3000;
 const db = 'mongodb+srv://thealexis95:Suckmydick1204@cluster0.d7rmw.mongodb.net/nodelab';
 
 mongoose
