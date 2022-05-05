@@ -3,8 +3,42 @@ body {
   min-height: calc(100vh - 90px);
   font-family: "Montserrat", sans-serif;
   font-size: 20px;
-  background: linear-gradient(to bottom, #ff6600, #928dab);
+  background: linear-gradient(to bottom, #1d8739, #305e4c);
   color: #fff;
+}
+
+label {
+  display: block;
+  font: 1rem 'Montserrat', sans-serif;
+}
+
+
+input,
+label {
+  margin: .4rem 0;
+}
+button{
+  border-radius: 5px;
+  border: none;
+  background: #32955d;
+  color: #f2f2f2;
+  transition: all 500ms ease; 
+}
+ button:hover{
+  background: rgba(255, 255, 255);
+  color: #3a7999;
+  box-shadow: inset 0 0 0 3px #030303;
+ }
+a:hover{
+  color: rgb(135, 66, 136);
+  transition: 0.7s;
+}
+.text_article_vnesh{
+  white-space: nowrap;
+  overflow: hidden;
+  padding: 5px;
+  text-overflow: ellipsis;
+  text-overflow: non;
 }
 
 .mark {
@@ -29,7 +63,7 @@ body {
 }
 
 select.dropdown-select {
-  font-size: 34px;
+  font-size: 25px;
   background-color: white;
   font-family: "Montserrat", sans-serif;
   text-transform: none;
@@ -92,6 +126,16 @@ a {
   color: #fff;
 }
 
+.dropdown-dark {
+  display: flex;
+}
+
+.button_author_search {
+  margin-left: 7px;
+  width: 40px;
+  height: 40px;
+}
+
 .review-item__main {
   font-size: 18px;
 }
@@ -116,17 +160,22 @@ h5::before {
 ul li {
   font-size: large;
 }
-h2{
+
+h2 {
   margin: 0%;
 }
+
+ul {
+  margin: 2em;
+}
+
 article {
-  background-color: rgba(0, 0, 0, 0.4);
+  background-color: rgba(10, 1, 1, 0.4);
   padding: 10px 20px;
   border-radius: 3px;
   margin-bottom: 10px;
   height: fit-content;
   border-radius: 10px;
-
 }
 
 .info {
@@ -137,7 +186,16 @@ article {
 .search_wrapper {
   display: flex;
   justify-content: center;
-  align-items: center;
+}
+
+#post-form {
+  max-width: 70%;
+  margin: 0 auto;
+  text-align: center;
+}
+
+#posts-author {
+  min-height: 4px;
 }
 
 .wrapper__list-group {
@@ -148,7 +206,6 @@ article {
   justify-content: center;
   margin: 0 auto;
 }
-
 
 .post .info {
   justify-content: flex-start;
@@ -163,19 +220,19 @@ h2 a {
   display: inline-block;
   margin: 0 auto;
 }
-input{
+
+input {
   border-radius: 8px;
 }
+
 form {
   background-color: rgba(0, 0, 0, 0.4);
-  padding: 10px 20px;
+  padding: 6px 7px 3px 8px;
   border-radius: 8px;
-  display: flex;
   flex-direction: column;
 }
 
 form div {
-  margin-bottom: 20px;
   display: flex;
 }
 
@@ -192,7 +249,7 @@ form div label {
 
 input,
 textarea {
-  min-height: 30px;
+  min-height: 28px;
   border: 1px solid #000;
   background-color: rgba(0, 0, 0, 0.4);
   color: #fff;
@@ -234,9 +291,18 @@ textarea {
   flex-direction: column;
   font-family: "Montserrat", sans-serif;
   font-size: 20px;
-  background: linear-gradient(to bottom, #9d4307, #928dab);
+  background: linear-gradient(to bottom, #28871d, #305e4c);
   color: #fff;
   padding-top: 0;
+}
+
+.rating_div {
+  margin: 10px 0;
+}
+
+.container_search_form {
+  margin: 0;
+  padding: 0px 1px 3px 0;
 }
 
 .error h1 {
@@ -254,9 +320,11 @@ textarea {
   font-size: 160px;
   margin-bottom: 20px;
 }
-.wrapper__trash{
+
+.wrapper__trash {
   text-align: end;
 }
+
 .btn-edit,
 .btn-delete {
   top: 10px;
@@ -269,7 +337,6 @@ textarea {
   width: 48px;
   border-radius: 3px;
   font-size: 16px;
-
 }
 
 .btn-review {

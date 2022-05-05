@@ -6,7 +6,7 @@
     <%- include('./partials/nav.ejs') %>
       <article class="post">
         <div class="info">
-          <span><%= post.createdAt.toLocaleDateString() || 'No date' %></span>
+          <span><%= post.createdAt.toLocaleDateString() || 'No date'%></span>
           <span><%= post.author %></span>
         </div>
         <p>
@@ -15,38 +15,34 @@
         <p>
           <%= post.title %>
         </p>
-
-
+        <p>Теги :
+          <%= post.tag %>
+        </p>
         <div class="wrapper__trash">
-        <button class="btn-delete" data-id="<%= post.id %>">
-          <i class="fas fa-trash-alt" data-id="<%= post.id %>"></i>
-        </button>
-        <a href="/edit/<%= post.id %>" class="btn-edit">
-          <i class="fas fa-edit"></i>
-        </a>
-      </div>
-
+          <button class="btn-delete" data-id="<%= post.id %>">
+                    <i class="fas fa-trash-alt" data-id="<%= post.id %>"></i>
+                </button>
+          <a href="/edit/<%= post.id %>" class="btn-edit">
+            <i class="fas fa-edit"></i>
+          </a>
+        </div>
       </article>
-      <h2 class="otzivi">Отзывы
-      </h2>
+      <h2 class="otzivi">Отзывы</h2>
       <ul class="wrapper__list-group">
         <% post.review.forEach(({ name, reviewMessage, mark}) => { %>
           <li class="list-group-item">
             <article>
               <div class="info">
-                <span><%= name %></span>
+                <span>Имя автора: <%= name %></span>
 
-                <span class="date_review"><%= post.createdAt.toLocaleDateString() || 'No date' %></span>
-
+                <span class="date_review"><%= post.createdAt.toLocaleDateString() || 'Nodate' %></span>
               </div>
-              <p class="review_text">
+              <p class="review_text">Отзыв:
                 <%= reviewMessage %>
               </p>
-
-              <p class="mark" id="mark">
+              <p class="mark" id="mark">Оценка:
                 <%= mark %>
               </p>
-
             </article>
           </li>
           <% }) %>
@@ -56,44 +52,54 @@
         <form class="review_wrapper" id="post-review" method="post" action="/posts/<%= post.id %>?_method=post">
           <div class="form-info">
             <label>Имя
-                        <input type="text" name="name">
-                      </label>
+                        <input type="text" name="name" />
+                    </label>
             <label>Оценка
-                        <input type="text" name="mark">
-                      </label>
+                        <input
+                            type="number"
+                            size="2"
+                            onblur="isright(this);"
+                            name="mark"/>
+                    </label>
           </div>
           <div class="form-text">
             <label>Отзыв
                         <textarea name="reviewMessage"></textarea>
-                      </label>
+                    </label>
           </div>
           <div class="form-button button-review">
-            <input type="submit" value="Оставить отзыв">
+            <input type="submit" value="Оставить отзыв" />
           </div>
         </form>
       </div>
-
-
       <script>
-        document.addEventListener('click', (e) => {
+        document.addEventListener("click", (e) => {
           const id = e.target ?.dataset ?.id || null;
           if (id) {
             fetch(`/posts/${id}`, {
-              method: 'DELETE',
+              method: "DELETE",
             }).then(() => {
-              window.location.href = '/posts';
+              window.location.href = "/posts";
             });
           }
         });
       </script>
       <script>
-        let el = body.getElementsByTagName("p")
+        let el = body.getElementsByTagName("p");
         for (let e of el) {
-          if (e.textContent == '' * 32) {
+          if (e.textContent == "" * 32) {
             e.innerHTML = "Нет оценки";
           }
         }
       </script>
-  </body>1
+      <script>
+        function isright(obj) {
+          var value = +obj.value.replace(/\D/g, "") || 0;
+          if (value > 10) value = 10;
+          if (value < 0) value = 0;
+          obj.value = value;
+        }
+      </script>
+  </body>
 
 </html>

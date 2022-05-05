@@ -11,7 +11,7 @@ const app = express();
 app.set('view engine', 'ejs');
 
 const PORT = 3000;
-const db = 'mongodb://127.0.0.1:27017/';
+const db = 'mongodb+srv://samurainisa:stix228228228@studyclaster.scu6p.mongodb.net/test?authSource=admin';
 
 mongoose
   .connect(db, { useNewUrlParser: true, useUnifiedTopology: true })
@@ -38,7 +38,7 @@ app.get('/', (req, res) => {
 });
 
 app.get('/posts/:id', (req, res) => {
-  const title = 'Post';
+  const title = 'Пост';
   Post
     .findById(req.params.id)
     .then(post => res.render(createPath('post'), { post, title }))
@@ -51,17 +51,17 @@ app.get('/posts/:id', (req, res) => {
 app.delete('/posts/:id', (req, res) => {
   Post
     .findByIdAndDelete(req.params.id)
-    .then(() => {
+    .then((result) => {
       res.sendStatus(200);
     })
     .catch((error) => {
       console.log(error);
-      res.render(createPath('error'), { title: 'Error' });
+      res.render(createPath('error'), { title: 'Error' });Ы
     });
 });
 
 app.get('/edit/:id', (req, res) => {
-  const title = 'Edit Post';
+  const title = 'Редактировать';
   Post
     .findById(req.params.id)
     .then(post => res.render(createPath('edit-post'), { post, title }))
@@ -72,10 +72,10 @@ app.get('/edit/:id', (req, res) => {
 });
 
 app.put('/edit/:id', (req, res) => {
-  const { title, author, text } = req.body;
+  const { title, author, text, tag } = req.body;
   const { id } = req.params;
   Post
-    .findByIdAndUpdate(id, { title, author, text })
+    .findByIdAndUpdate(id, { title, author, text, tag })
     .then((result) => res.redirect(`/posts/${id}`))
     .catch((error) => {
       console.log(error);
@@ -83,40 +83,62 @@ app.put('/edit/:id', (req, res) => {
     });
 });
 
-app.post('/posts', (req, res) => {
-  const { find } = req.params;
-  console.log(find);
-  Post
-    .find()
-    .then(posts => res.render(createPath('posts'), { find }))
-    .catch((error) => {
-      console.log(error);
-      res.render(createPath('error'), { title: 'Error' });
-    });
-});
-
 app.get('/posts', (req, res) => {
-  const title = 'Posts';
-  Post
-    .find()
-    .sort({ createdAt: -1 })
-    .then(posts => res.render(createPath('posts'), { posts, title }))
-    .catch((error) => {
-      console.log(error);
-      res.render(createPath('error'), { title: 'Error' });
-    });
+  const title = 'Статьи';
+  const search_tag = req.query.find
+  const tag_author = req.query.author
+  const startdate = req.query.start
+  const enddate = req.query.end
+
+  if (search_tag == null && tag_author == null && startdate == null && enddate == null) {
+    Post
+      .find()
+      .sort({ createdAt: -1 })
+      .then(posts => res.render(createPath('posts'), { posts, title }))
+      .catch((error) => {
+        console.log(error);
+        res.render(createPath('error'), { title: 'Error' });
+      });
+  }
+  else if (tag_author == null && startdate == null && enddate == null) {
+    Post
+      .find({ $or: [{ title: { $regex: search_tag, $options: "i" } }, { tag: { $regex: search_tag, $options: "i" } }] })
+      .sort({ createdAt: -1 })
+      .then(posts => res.render(createPath('posts'), { posts, title }))
+      .catch((error) => {
+        console.log(error);
+        res.render(createPath('error'), { title: 'Error' });
+      });
+  } 
+  else if (search_tag == null && startdate == null && enddate == null) {
+    Post
+      .find({ author: { $regex: tag_author, $options: "i" } })
+      .sort({ createdAt: -1 })
+      .then(posts => res.render(createPath('posts'), { posts, title }))
+      .catch((error) => {
+        console.log(error);
+        res.render(createPath('error'), { title: 'Error' });
+      });
+  } 
+  else if (tag_author == null && search_tag == null) {
+    Post
+      .find({ createdAt: { $gte: new Date(startdate), $lt: new Date(enddate) } })
+      .then(posts => res.render(createPath('posts'), { posts, title }))
+      .catch((error) => {
+        console.log(error);
+        res.render(createPath('error'), { title: 'Error' });
+      });
+  }
 });
-
-
 
 app.get('/add-post', (req, res) => {
-  const title = 'Add Post';
+  const title = 'Добавить статью';
   res.render(createPath('add-post'), { title });
 });
 
 app.post('/add-post', (req, res) => {
-  const { title, author, text, review } = req.body;
-  const post = new Post({ title, author, text, review });
+  const { title, author, text, review, tag } = req.body;
+  const post = new Post({ title, author, text, tag, review });
   post
     .save()
     .then((result) => res.redirect('/posts'))
